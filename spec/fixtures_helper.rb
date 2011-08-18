@@ -27,7 +27,7 @@ class Repo
   def write(files = {}, mode = 'w')
     files.each do |path, content|
       FileUtils.mkdir_p(File.dirname path)
-      File.open(path, mode) {|f| f.write "#{content}\n"}
+      File.open(path, mode) {|f| f.write content}
     end
   end
 
@@ -94,6 +94,11 @@ class Page
       write_index docs
     end
     docs[1]
+  end
+
+  # set content by appending
+  def content_append(c = '')
+    content(content + c)
   end
 
   # get all yaml docs from this page's index.md file
