@@ -35,12 +35,15 @@ require './fixtures_helper'
 #   end
 # end
 
-Pageset.new 'multiple-pages' do |r|
+Pageset.new 'basic-tests' do |r|
   1.upto(10).each do |i|
     r.page "page-#{i}" do |p|
       p.meta 'Title' => "Page #{i}", 'Tags' => %w{foo bar baz}
       p.content "Sample content for page #{i}."
-      r.git_add_commit "Page #{i}."
+      r.git_add_commit "Created page #{i}."
+      p.content "Modified content for page #{i}."
+      p.write "file#{i}.txt" => "Sample file#{i} content"
+      r.git_add_commit "Updated page #{i}."
     end
   end
 end
