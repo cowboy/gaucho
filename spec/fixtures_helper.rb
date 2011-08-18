@@ -50,6 +50,12 @@ class Repo
     commit_time = "#{@time.to_i} -0500"
     `export GIT_AUTHOR_DATE="#{author_time}"; export GIT_COMMITTER_DATE="#{commit_time}"; git commit -m "#{message}"`
   end
+
+  # git add + commit
+  def git_add_commit(message = nil)
+    git_add
+    git_commit message
+  end
 end
 
 class Pageset < Repo

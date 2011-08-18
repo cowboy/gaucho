@@ -9,8 +9,7 @@ Pageset.new 'test' do |r|
   r.git_commit 'commit 1'
 
   r.append 'baz.txt' => 'bar has been modified!!!'
-  r.git_add
-  r.git_commit 'commit 2'
+  r.git_add_commit 'commit 2'
 end
 
 Pageset.new 'two-pages' do |r|
@@ -21,23 +20,19 @@ Pageset.new 'two-pages' do |r|
     r.git_commit 'page 1, commit 1'
 
     p.meta 'Title' => 'Page One Modified!', 'Tags' => %w{foo bar baz}
-    r.git_add
-    r.git_commit 'page 1, commit 2'
+    r.git_add_commit 'page 1, commit 2'
   end
 
   r.page 'page-two' do |p|
     p.meta 'Title' => 'Page Two!', 'Tags' => %w{bar baz}
     p.content 'this is sample page two'
-    r.git_add
-    r.git_commit 'page 2, commit 1'
+    r.git_add_commit 'page 2, commit 1'
 
     p.content 'this is sample page two, modified!'
     p.write 'foo.txt' => 'content for foo.txt'
-    r.git_add
-    r.git_commit 'page 2, commit 2'
+    r.git_add_commit 'page 2, commit 2'
 
     p.append 'foo.txt' => 'more content for foo.txt!'
-    r.git_add
-    r.git_commit 'page 2, commit 3'
+    r.git_add_commit 'page 2, commit 3'
   end
 end
