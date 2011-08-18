@@ -5,8 +5,7 @@ require './fixtures_helper'
 Pageset.new 'test' do |r|
   r.write 'foo/bar.txt' => 'this is some sample content for foo'
   r.write 'baz.txt' => 'this is some sample content for bar'
-  r.git_add
-  r.git_commit 'commit 1'
+  r.git_add_commit 'commit 1'
 
   r.append 'baz.txt' => 'bar has been modified!!!'
   r.git_add_commit 'commit 2'
