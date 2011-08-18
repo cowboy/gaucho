@@ -16,8 +16,7 @@ Pageset.new 'two-pages' do |r|
   r.page 'page-one' do |p|
     p.meta 'Title' => 'Page One!', 'Tags' => %w{foo bar}
     p.content 'this is sample page one'
-    r.git_add
-    r.git_commit 'page 1, commit 1'
+    r.git_add_commit 'page 1, commit 1'
 
     p.meta 'Title' => 'Page One Modified!', 'Tags' => %w{foo bar baz}
     r.git_add_commit 'page 1, commit 2'
