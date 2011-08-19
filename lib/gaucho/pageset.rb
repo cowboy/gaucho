@@ -1,26 +1,23 @@
 
-require 'grit'
-require 'pp'
-
 module Gaucho
-  class Page
-    attr_reader :id
-    def initialize(pageset, id, commits)
-    end
-  end
-
   class Pageset
     include Enumerable
 
-    attr_reader :repo
+    attr_reader :repo, :subdir
 
     def initialize(repo, options = {})
       # Init repo
       @repo = repo
       @repo = Grit::Repo.new(@repo) unless repo.instance_of? Grit::Repo
 
-      # TODO: allow a subdir to specified
-      @subdir = ''
+      # Initialize from options, overriding these defaults.
+      { subdir: nil
+      }.merge(options).each do |key, value|
+        instance_variable_set("@#{key}".to_sym, value)
+      end
+      
+      # Ensure a specified subdir has a trailing slash.
+      @subdir += '/' unless subdir.nil? || @subdir =~ %r{/$}
     end
 
     # Allow enumeration.
@@ -46,7 +43,7 @@ module Gaucho
       @pages = []
       @pages_by_id = {}
       page_commits.each do |id, commits|
-        page = Gaucho::Page.new(self, id, commits)
+        page = Gaucho::Page.new(id, commits)
         @pages << page
         @pages_by_id[id] = page
       end

@@ -35,8 +35,8 @@ require './fixtures_helper'
 #   end
 # end
 
-Pageset.new 'basic-tests' do |r|
-  1.upto(10).each do |i|
+Pageset.new 'basic' do |r|
+  1.upto(3).each do |i|
     r.page "page-#{i}" do |p|
       p.meta 'Title' => "Page #{i}", 'Tags' => %w{foo bar baz}
       p.content "Sample content for page #{i}."
@@ -44,6 +44,21 @@ Pageset.new 'basic-tests' do |r|
       p.content "Modified content for page #{i}."
       p.write "file#{i}.txt" => "Sample file#{i} content"
       r.git_add_commit "Updated page #{i}."
+    end
+  end
+end
+
+Pageset.new 'subdir' do |r|
+  %w{foo bar}.each do |subdir|
+    1.upto(2).each do |i|
+      r.page "#{subdir}/#{subdir}-page-#{i}" do |p|
+        p.meta 'Title' => "Page #{i}", 'Tags' => %w{foo bar baz}
+        p.content "Sample content for #{subdir} page #{i}."
+        r.git_add_commit "Created #{subdir} page #{i}."
+        p.content "Modified content for #{subdir} page #{i}."
+        p.write "file#{i}.txt" => "Sample file#{i} content"
+        r.git_add_commit "Updated #{subdir} page #{i}."
+      end
     end
   end
 end
