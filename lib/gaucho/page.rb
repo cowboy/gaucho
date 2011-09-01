@@ -1,10 +1,11 @@
 
 module Gaucho
   class Page
-    attr_reader :id
+    attr_reader :id, :pageset
 
-    def initialize(id, commits)
+    def initialize(id, pageset)
       @id = id
+      @pageset = pageset
     end
   end
 end

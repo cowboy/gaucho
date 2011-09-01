@@ -13,7 +13,7 @@ module Gaucho
       # Initialize from options, overriding these defaults.
       { subdir: nil
       }.merge(options).each do |key, value|
-        instance_variable_set("@#{key}".to_sym, value)
+        instance_variable_set "@#{key}".to_sym, value
       end
       
       # Ensure a specified subdir has a trailing slash.
@@ -43,14 +43,15 @@ module Gaucho
       @pages = []
       @pages_by_id = {}
       page_commits.each do |id, commits|
-        page = Gaucho::Page.new(id, commits)
+        page = Gaucho::Page.new id, self
         @pages << page
         @pages_by_id[id] = page
       end
       @pages
     end
 
-    # Get commit index for this repo.
+    # Get commit index for this repo. The git log is parsed manually, because
+    # the structure Gaucho needs doesn't seem to exist anywhere in Grit.
     def page_commits
       return @page_commits unless @page_commits.nil?
 

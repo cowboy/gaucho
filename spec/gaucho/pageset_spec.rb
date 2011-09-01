@@ -23,11 +23,11 @@ module Gaucho
         pageset = Pageset.new 'spec/fixtures/subdir'
         pageset.subdir.should eq nil
       end
-      it "should reflect the passed subdir option" do
+      it "should reflect the passed-in subdir option" do
         pageset = Pageset.new 'spec/fixtures/subdir', subdir: 'foo/'
         pageset.subdir.should eq 'foo/'
       end
-      it "should have a trailing /" do
+      it "should always have a trailing /" do
         pageset = Pageset.new 'spec/fixtures/subdir', subdir: 'foo'
         pageset.subdir.should eq 'foo/'
       end
