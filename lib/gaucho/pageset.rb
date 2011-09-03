@@ -15,7 +15,7 @@ module Gaucho
       }.merge(options).each do |key, value|
         instance_variable_set "@#{key}".to_sym, value
       end
-      
+
       # Ensure a specified subdir has a trailing slash.
       @subdir += '/' unless subdir.nil? || @subdir =~ %r{/$}
     end

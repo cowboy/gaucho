@@ -38,11 +38,24 @@ module Gaucho
       end
     end
 
-    %w{id parents tree message author committer authored_date committed_date}.each do |method|
+    %w{id parents message author committer authored_date committed_date}.each do |method|
       describe "##{method}" do
         it "should foward to the underlying Grit::Commit object" do
           @commit.public_send(method.to_sym).should eq @commit.commit.public_send(method.to_sym)
         end
+      end
+    end
+
+    describe "#tree" do
+      it "should reflect the page's tree for this commit" do
+        @commit.tree.contents.map(&:basename).should eq %w{file1.txt index.md}
+      end
+      it "should reflect the page's tree for this commit (w/subdir)" do
+        pageset = Pageset.new 'spec/fixtures/subdir', subdir: 'foo'
+        page = Page.new 'foo-page-1', pageset
+        id = page.commits.last.id
+        commit = Gaucho::Commit.new id, page
+        commit.tree.contents.map(&:basename).should eq %w{file1.txt index.md}
       end
     end
 

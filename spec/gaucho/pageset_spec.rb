@@ -32,6 +32,16 @@ module Gaucho
         pageset.subdir.should eq 'foo/'
       end
     end
+    
+    # describe "#path" do
+    #   it "should be the path of the repo + the subdir" do
+    #     path = 'spec/fixtures/subdir'
+    #     subdir = 'foo'
+    #     dir = File.expand_path "#{path}/#{subdir}"
+    #     pageset = Pageset.new path, subdir: subdir
+    #     pageset.path.should eq dir
+    #   end
+    # end
 
     describe "#page_commits" do
       # note: this is overly implementation-specific
