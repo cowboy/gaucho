@@ -14,9 +14,8 @@ module Gaucho
         @excerpt = "This is an excerpt\nspread over two lines."
         @more = "And this is the rest\nof the content."
         @data_simple = @excerpt
-        @data_more = "#{@excerpt}\n<!--more-->\n#{@more}"
+        @data_more = "#{@excerpt}\n<!-- more -->\n#{@more}"
         @data_yaml = <<-EOF.gsub(/^\s+/, '')
-          ---
           Str1: A test string
           Str2: "Another test string"
           Array1: [foo, bar, baz]
@@ -35,7 +34,7 @@ module Gaucho
         index.meta.excerpt.should eq @excerpt
         index.meta.content.should eq "#{@excerpt}\n#{@more}"
       end
-      it "should parse simple yaml metadata" do
+      it "should parse yaml metadata + content" do
         index = Gaucho::Index.new 'index.md', @data_yaml
         index.meta.str1.should eq "A test string"
         index.meta.str2.should eq "Another test string"
@@ -43,6 +42,11 @@ module Gaucho
         index.meta.array2.should eq %w{1 2 3}
         index.meta.excerpt.should eq @excerpt
         index.meta.content.should eq "#{@excerpt}\n#{@more}"
+      end
+      it "should not care about --- before metadata" do
+        index1 = Gaucho::Index.new 'index.md', @data_yaml
+        index2 = Gaucho::Index.new 'index.md', "---\n#{@data_yaml}"
+        index1.meta.to_hash.should eq index2.meta.to_hash
       end
     end
   end
